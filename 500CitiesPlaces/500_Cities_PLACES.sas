@@ -5,7 +5,7 @@
 %let sdoh_yr = 2021; /*The last year of the range for the 5-year SDOH datasets. The rage for the most recent data is 2017-2021*/
 %let places_yr = 2022;  /*The year release, as specified in the Places dataset titles. The current release is 2022*/
 
-libname VCU "/mnt/viya-share/myazurevol/data/keyyou/vcumassey/_data";
+libname VCU "/cmw/data_automation/_data";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
