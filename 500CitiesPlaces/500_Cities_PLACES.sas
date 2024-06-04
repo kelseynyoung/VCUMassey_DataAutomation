@@ -5,7 +5,7 @@
 %let sdoh_yr = 2021; /*The last year of the range for the 5-year SDOH datasets. The rage for the most recent data is 2017-2021*/
 %let places_yr = 2022;  /*The year release, as specified in the Places dataset titles. The current release is 2022*/
 
-libname VCU "/cmw/data_automation/_data";
+libname dt "/cmw/data_automation/_data";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
@@ -27,7 +27,7 @@ GUESSINGROWS=3000; /* Specifies the number of rows of the file to scan to determ
 run;
 
 /*Adding leading zeros to the LocationID variable and converting it from numeric to character*/
-data VCU.&dsn._&yr_end.;
+data dt.&dsn._&yr_end.;
 set &dsn._&yr_end (rename=(locationID=location_num));
 LocationID=put(location_num,&idlength.); 
 data_range_end_year = &yr_end.;
@@ -38,7 +38,7 @@ run;
 /*Loading data to Public folder*/
 proc casutil;
  droptable casdata="&dsn._&yr_end." incaslib="Public" quiet;
- load data =VCU.&dsn._&yr_end. outcaslib = "Public" casout = "&dsn._&yr_end." promote ;
+ load data =dt.&dsn._&yr_end. outcaslib = "Public" casout = "&dsn._&yr_end." promote ;
 quit;
 
 %mend;
