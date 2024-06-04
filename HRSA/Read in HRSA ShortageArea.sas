@@ -1,15 +1,15 @@
-/* libname HRSA "/mnt/viya-share/myazurevol/data/keyyou/vcumassey/HRSA/data"; */
+libname dt "/cmw/data_automation/_data";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
 %macro importHRSA(dsn, filename);
 filename HRSA url "https://data.hrsa.gov/DataDownload/DD_Files/&filename..xlsx";
-proc import datafile = HRSA out = HRSA.&dsn. dbms=xlsx replace;
+proc import datafile = HRSA out = dt.&dsn. dbms=xlsx replace;
 run;
 
 proc casutil;
 droptable casdata="&dsn." incaslib="public" quiet;
-load data =HRSA.&dsn. outcaslib = "public" casout = "&dsn." promote ;
+load data =dt.&dsn. outcaslib = "public" casout = "&dsn." promote ;
 quit;
 
 %mend;

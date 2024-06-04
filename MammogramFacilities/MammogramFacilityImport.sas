@@ -1,4 +1,4 @@
-libname mam "/mnt/viya-share/myazurevol/data/keyyou/vcumassey/MammogramFacilities/data";
+libname dt "/cmw/data_automation/_data";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
@@ -34,7 +34,7 @@ filename inzip zip "&ziploc";
 /* run; */
 
 /*https://www.fda.gov/radiation-emitting-products/mammography-information-patients/search-certified-facility  */
-  data mam.MammoScreenFacilities    ;
+  data dt.MammoScreenFacilities    ;
           infile inzip(public.txt) delimiter = '|' MISSOVER DSD lrecl=32767 ;
           informat Facility_Name $75. ;
           informat Address1 $50. ;
@@ -68,5 +68,5 @@ filename inzip zip "&ziploc";
        run;
 proc casutil;
 droptable casdata="MammoScreenFacilities" incaslib="public" quiet;
-load data =mam.MammoScreenFacilities outcaslib = "public" casout = "MammoScreenFacilities" promote ;
+load data =dt.MammoScreenFacilities outcaslib = "public" casout = "MammoScreenFacilities" promote ;
 quit;
