@@ -1,3 +1,4 @@
+libname dt "/cmw/data_automation/_data";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
@@ -48,7 +49,7 @@ quit;
 %put keeplist statement : &keeplist. ;
 
 
-data DP05_VACOUNTIES&year. ;
+data dt.DP05_VACOUNTIES&year. ;
 set ACS.root (firstobs=2 rename= (&rename.));
 &convert.;
 label &label.;
@@ -64,7 +65,7 @@ run;
 
 proc casutil;
 droptable casdata="DP05_VACOUNTIES&year." incaslib="public" quiet;
-load data = DP05_VACOUNTIES&year. outcaslib = "public" casout = "DP05_VACOUNTIES&year." promote ;
+load data = dt.DP05_VACOUNTIES&year. outcaslib = "public" casout = "DP05_VACOUNTIES&year." promote ;
 quit;
 
 %mend;
