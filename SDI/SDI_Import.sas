@@ -1,4 +1,4 @@
-libname SDI "/mnt/viya-share/data/VCUMassey_DataAutomation/_data";
+libname dt "/cmw/data_automation/_data";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
@@ -14,7 +14,7 @@ run;
 /* proc import datafile=SDI dbms=csv out=SDI_&EY._&type. replace; */
 /* guessingrows=2000; */
 /* run; */
-data SDI.SDI_&EY._&type.;
+data dt.SDI_&EY._&type.;
 
 	infile SDI delimiter=',' MISSOVER DSD firstobs=2;
 	informat &type._FIPS $32.;
@@ -77,7 +77,7 @@ run;
 
 proc casutil;
 droptable casdata="SDI_&EY._&type." incaslib="public" quiet;
-load data =SDI.SDI_&EY._&type. outcaslib = "public" casout = "SDI_&EY._&type." promote ;
+load data =dt.SDI_&EY._&type. outcaslib = "public" casout = "SDI_&EY._&type." promote ;
 quit;
 
 %mend;

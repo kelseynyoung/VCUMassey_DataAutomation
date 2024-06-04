@@ -27,7 +27,7 @@ GUESSINGROWS=3000; /* Specifies the number of rows of the file to scan to determ
 run;
 
 /*Adding leading zeros to the LocationID variable and converting it from numeric to character*/
-data CTY_PLCE.&dsn._&yr_end.;
+data VCU.&dsn._&yr_end.;
 set &dsn._&yr_end (rename=(locationID=location_num));
 LocationID=put(location_num,&idlength.); 
 data_range_end_year = &yr_end.;
@@ -38,7 +38,7 @@ run;
 /*Loading data to Public folder*/
 proc casutil;
  droptable casdata="&dsn._&yr_end." incaslib="Public" quiet;
- load data =CTY_PLCE.&dsn._&yr_end. outcaslib = "Public" casout = "&dsn._&yr_end." promote ;
+ load data =VCU.&dsn._&yr_end. outcaslib = "Public" casout = "&dsn._&yr_end." promote ;
 quit;
 
 %mend;
