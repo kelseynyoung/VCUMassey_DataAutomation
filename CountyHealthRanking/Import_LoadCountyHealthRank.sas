@@ -1,43 +1,40 @@
-%let year 			= 2024;
-%let CHR_FileName 	= analytic_data2024;
-%let CHRT_FileName 	= chr_trends_sas_2024;
+%let folder=/cmw/data_automation/_data/;
+libname dt "&folder.";
 
+cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
+caslib _all_ assign;
 
-/*Retrieve CHR data */
-filename CHR temp ;
+%macro importcountyhealth(year, CHR_FileName,CHRT_FileName );
+
+%deltable (tables=dt.countyhealthranking&year. dt.countyhealthranking_trend&year.);
+
+/* !!!!!!! filename location must all be lower case !!!!!!! */
+filename CHR "&folder.countyhealthranking&year..sas7bdat";
 proc http method='GET'
 	url="https://www.countyhealthrankings.org/sites/default/files/media/document/&CHR_FileName..sas7bdat"
 	out=CHR;
 run;
-/*Retrieve CHR Trends data */
-filename CHRT temp ;
+
+/* !!!!!!! filename location must all be lower case !!!!!!! */
+filename CHRT "&folder.countyhealthranking_trend&year..sas7bdat";
 proc http method='GET'
 	url="https://www.countyhealthrankings.org/sites/default/files/media/document/&CHRT_FileName..sas7bdat"
 	out=CHRT;
 run;
-/*Start CAS Session  */
-cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
-caslib _all_ assign;
-/*Upload to CAS  */
-proc cas;
-   upload                                            
-      path="%sysfunc(pathname(CHR))"
-      casOut={caslib="public", name="CountyHealthRanking&year."}
-      importOptions="basesas" ;
-   upload                                            
-      path="%sysfunc(pathname(CHRT))"
-      casOut={caslib="public", name="CountyHealthRanking_Trends&year."}
-      importOptions="basesas"; 
-run;
 
-Proc cas;
-	table.promote / caslib="PUBLIC", drop=TRUE, name="CountyHealthRanking&year", 
-		quiet=FALSE, target="CountyHealthRanking&year", targetLib="Public";
-	table.promote / caslib="PUBLIC", drop=TRUE, name="CountyHealthRanking_Trends&year", 
-		quiet=FALSE, target="CountyHealthRanking_Trends&year", targetLib="Public";
-run;
+proc casutil;
+droptable casdata="countyhealthranking&year." incaslib="public" quiet;
+load data =dt.countyhealthranking&year. outcaslib = "public" casout = "countyhealthranking&year." promote ;
+
+droptable casdata="countyhealthranking_trend&year." incaslib="public" quiet;
+load data =dt.countyhealthranking_trend&year. outcaslib = "public" casout = "countyhealthranking_trend&year." promote ;
+quit;
 
 
+%mend;
+
+%importcountyhealth(2024, analytic_data2024, chr_trends_sas_2024);
+%importcountyhealth(2023, analytic_data2023_0, chr_trends_sas_2023);
 
 
 
