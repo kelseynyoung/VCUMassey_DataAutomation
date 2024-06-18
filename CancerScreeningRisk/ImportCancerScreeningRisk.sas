@@ -1,14 +1,10 @@
-/* uncomment for testing the macro*/
-
-/* %let areatype=State; */
-/* %let query=topic=women%nrstr(&)risk=v17%nrstr(&)race=00%nrstr(&)datatype=0%nrstr(&)type=risk%nrstr(&)sortVariableName=percent%nrstr(&)sortOrder=asc%nrstr(&)output=1; */
-/* %let theme=Mammo; */
-
-
 libname dt "/cmw/data_automation/_data";
+
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
+%let ExtractYR=%sysfunc(year(%sysfunc(date())));
+%put &ExtractYR.;
 
 %macro cancerscreening(areatype, query, theme);
 
@@ -165,7 +161,7 @@ theme		=Colon
 
 
 PROC SQL;
-   CREATE TABLE WORK.SCF_ScreeingST AS
+   CREATE TABLE WORK.SCF_ScreeningST AS
    SELECT 
       t1.GEO,
       t1.FIPS,
@@ -202,7 +198,7 @@ RUN;
 
 
 PROC SQL;
-   CREATE TABLE WORK.SCF_ScreeingCO AS
+   CREATE TABLE WORK.SCF_ScreeningCO AS
    SELECT 
       t1.GEO,
       t1.FIPS,
@@ -250,13 +246,13 @@ PROC SQL;
 QUIT;
 RUN;
 
-data Dt.SCF_Screening;
-set SCF_SCREEINGCO SCF_SCREEINGST;
+data Dt.SCF_Screening_&ExtractYR.;
+set SCF_SCREENINGCO SCF_SCREENINGST;
 run;
 
 proc casutil;
-droptable casdata="SCF_Screening" incaslib="public" quiet;
-load data = dt.SCF_Screening outcaslib = "public" casout = "SCF_Screening" promote ;
+droptable casdata="SCF_Screening_&ExtractYR." incaslib="public" quiet;
+load data = Dt.SCF_Screening_&ExtractYR. outcaslib = "public" casout = "SCF_Screening_&ExtractYR." promote ;
 quit;
 
 

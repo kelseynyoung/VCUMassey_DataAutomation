@@ -82,6 +82,7 @@ quit;
 
 %mend;
 
+/* 2008 uniquely used an "_" for Census tract, all others use "-"  */
 %if &SY. = 2008 %then    %importSDI(Census		 ,&SY.-&EY.-sdi/rgcsdi-&SY.-&EY._censustract);
 %else 					 %importSDI(Census		 ,&SY.-&EY.-sdi/rgcsdi-&SY.-&EY.-censustract);
 

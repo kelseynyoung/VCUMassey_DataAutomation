@@ -1,8 +1,9 @@
 libname dt "/cmw/data_automation/_data";
+
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
-/*testing KNY  */
+
 %macro readinACS_applyVar(year);
 
 /*read in the ACS 5 Year  var list - will need to run this per ACS reporting year  */
