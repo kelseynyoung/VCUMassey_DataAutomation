@@ -10,7 +10,7 @@ quit;
 %put dsn_list  = &dsn_list.;
 
 /*create final dataset of all permuations  */
-data CCP.&final_table._&chunk.; set &dsn_list.; run;
+data dt.&final_table._&chunk.; set &dsn_list.; run;
 /*delete individual temp tables  */
 %deltable (tables=&dsn_list.);
 %mend;
@@ -137,12 +137,12 @@ run;
 /************************************/
 
 /*Set all together  */
-Data CCP.COUNTY_INCD_51;
-set CCP.COUNTY_INCD_51_A CCP.COUNTY_INCD_51_B CCP.COUNTY_INCD_51_C CCP.COUNTY_INCD_51_D CCP.COUNTY_INCD_51_E CCP.COUNTY_INCD_51_F CCP.COUNTY_INCD_51_G  CCP.COUNTY_INCD_51_H;
+Data dt.COUNTY_INCD_51;
+set dt.COUNTY_INCD_51_A dt.COUNTY_INCD_51_B dt.COUNTY_INCD_51_C dt.COUNTY_INCD_51_D dt.COUNTY_INCD_51_E dt.COUNTY_INCD_51_F dt.COUNTY_INCD_51_G  dt.COUNTY_INCD_51_H;
 run;
 
-Data CCP.COUNTY_DEATH_51;
-set CCP.COUNTY_DEATH_51_A CCP.COUNTY_DEATH_51_B CCP.COUNTY_DEATH_51_C CCP.COUNTY_DEATH_51_D CCP.COUNTY_DEATH_51_E CCP.COUNTY_DEATH_51_F CCP.COUNTY_DEATH_51_G  CCP.COUNTY_DEATH_51_H;
+Data dt.COUNTY_DEATH_51;
+set dt.COUNTY_DEATH_51_A dt.COUNTY_DEATH_51_B dt.COUNTY_DEATH_51_C dt.COUNTY_DEATH_51_D dt.COUNTY_DEATH_51_E dt.COUNTY_DEATH_51_F dt.COUNTY_DEATH_51_G  dt.COUNTY_DEATH_51_H;
 run;
 
 

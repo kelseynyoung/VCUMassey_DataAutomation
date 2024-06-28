@@ -6,18 +6,18 @@ To do Kelsey:
 
 */
 
-%let folder = /mnt/viya-share/myazurevol/data/keyyou/vcumassey/CountyCancerProfiles;
-libname CCP "&folder./data";
+%let folder = /cmw/data_automation/VCUMassey_DataAutomation/CountyCancerProfiles;
+libname dt "/cmw/data_automation/_data";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
 %macro call_CancerProfiles(stateFIPS, areatype, cancer, race, sex, age, stage, year=0, sortVariableName=rate, sortOrder=desc, output=1);
 
 /* Perform data import and cleansing */
-%include "&folder./code/Data Step for Cancer Profile Incident import.sas";
+%include "&folder./Data Step for Cancer Profile Incident import.sas";
 
 /* Perform data import and cleansing */
-%include "&folder./code/Data Step for Cancer Profile Mortality import.sas";
+%include "&folder./Data Step for Cancer Profile Mortality import.sas";
 %mend;
 
 %macro setdatasets(final_table);
@@ -32,7 +32,7 @@ quit;
 /* %put dsn_list  = &dsn_list.; */
 
 /*create final dataset of all permuations  */
-data CCP.&final_table.; set &dsn_list.; run;
+data dt.&final_table.; set &dsn_list.; run;
 /*delete individual temp tables  */
 %deltable (tables=&dsn_list.);
 %mend;
@@ -53,9 +53,9 @@ data CCP.&final_table.; set &dsn_list.; run;
 
 proc casutil;
 droptable casdata="STATE_INCD_00" incaslib="public" quiet;
-load data =CCP.STATE_INCD_00 outcaslib = "public" casout = "STATE_INCD_00" promote ;
+load data =dt.STATE_INCD_00 outcaslib = "public" casout = "STATE_INCD_00" promote ;
 droptable casdata="STATE_DEATH_00" incaslib="public" quiet;
-load data =CCP.STATE_DEATH_00 outcaslib = "public" casout = "STATE_DEATH_00" promote ;
+load data =dt.STATE_DEATH_00 outcaslib = "public" casout = "STATE_DEATH_00" promote ;
 quit;
 
 /*County - permutations requested by VCU    */
@@ -71,21 +71,21 @@ quit;
 
 proc casutil;
 droptable casdata="COUNTY_INCD_00" incaslib="public" quiet;
-load data =CCP.COUNTY_INCD_00 outcaslib = "public" casout = "COUNTY_INCD_00" promote ;
+load data =dt.COUNTY_INCD_00 outcaslib = "public" casout = "COUNTY_INCD_00" promote ;
 droptable casdata="COUNTY_DEATH_00" incaslib="public" quiet;
-load data =CCP.COUNTY_DEATH_00 outcaslib = "public" casout = "COUNTY_DEATH_00" promote ;
+load data =dt.COUNTY_DEATH_00 outcaslib = "public" casout = "COUNTY_DEATH_00" promote ;
 quit;
 
 /*Virginia County Level */
 /* Create Master Dataset of all Combinations (minus non existing ex: prostate & female)  */
-%include "&folder./code/Create Query Lookup Tables.sas";
+%include "&folder./Create Query Lookup Tables.sas";
 /*Open the Program and Run piece meal  */
-%include "&folder./code/Execute for VA County.sas";
+%include "&folder./Execute for VA County.sas";
 
 proc casutil;
 droptable casdata="COUNTY_INCD_51" incaslib="public" quiet;
-load data =CCP.COUNTY_INCD_51 outcaslib = "public" casout = "COUNTY_INCD_51" promote ;
+load data =dt.COUNTY_INCD_51 outcaslib = "public" casout = "COUNTY_INCD_51" promote ;
 droptable casdata="COUNTY_DEATH_51" incaslib="public" quiet;
-load data =CCP.COUNTY_DEATH_51 outcaslib = "public" casout = "COUNTY_DEATH_51" promote ;
+load data =dt.COUNTY_DEATH_51 outcaslib = "public" casout = "COUNTY_DEATH_51" promote ;
 quit;
 

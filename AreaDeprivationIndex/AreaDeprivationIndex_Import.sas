@@ -12,9 +12,9 @@ cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
 /*Importing 12-digit FIPS codes for all states for version 2015 and renaming to ADI_FIPS_2015*/
-data WORK.ADI_FIPS_2015    ;
+data dt.ADI_FIPS_2015    ;
     %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
-    infile "&folder./AreaDeprivationIndex/Datasets/US_2015_ADI_Census_Block_Group_v4_0_1.csv" delimiter = ',' MISSOVER DSD
+    infile "&folder./VCUMassey_DataAutomation/AreaDeprivationIndex/datasets/US_2015_ADI_Census_Block_Group_v4_0_1.csv" delimiter = ',' MISSOVER DSD
 lrecl=32767 firstobs=2 ;
        informat VAR1 best32. ;
        informat GISJOIN $15. ;
@@ -40,9 +40,9 @@ lrecl=32767 firstobs=2 ;
 
 
 /*Importing 12-digit FIPS codes for all states for version 2020 and renaming to ADI_FIPS_2020*/
-data WORK.ADI_FIPS_2020    ;
+data dt.ADI_FIPS_2020    ;
     %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
-    infile '/mnt/viya-share/myazurevol/data/keyyou/vcumassey/AreaDeprivationIndex/Datasets/US_2020_ADI_Census_Block_Group_v4_0_1.csv' delimiter = ',' MISSOVER DSD
+    infile "&folder./VCUMassey_DataAutomation/AreaDeprivationIndex/datasets/US_2020_ADI_Census_Block_Group_v4_0_1.csv" delimiter = ',' MISSOVER DSD
 lrecl=32767 firstobs=2 ;
        informat GISJOIN $15. ;
        informat FIPS best32. ;
@@ -63,9 +63,9 @@ lrecl=32767 firstobs=2 ;
     run;
 
 /*Importing 12-digit FIPS codes for all states for version 2022 and renaming to ADI_FIPS_2022*/
-data WORK.ADI_FIPS_2022    ;
+data dt.ADI_FIPS_2022    ;
     %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
-    infile '/mnt/viya-share/myazurevol/data/keyyou/vcumassey/AreaDeprivationIndex/Datasets/US_2022_ADI_Census_Block_Group_v4_0_1.csv' delimiter = ',' MISSOVER DSD
+    infile "&folder./VCUMassey_DataAutomation/AreaDeprivationIndex/datasets/US_2022_ADI_Census_Block_Group_v4_0_1.csv" delimiter = ',' MISSOVER DSD
 lrecl=32767 firstobs=2 ;
        informat GISJOIN $15. ;
        informat FIPS best32. ;
@@ -85,11 +85,11 @@ lrecl=32767 firstobs=2 ;
 
     run;
 
-
+/*File too big to load  */
 /*Importing 9-digit FIPS codes for Virginia only for version 2015 and renaming to ADI_VAZCTA_2015*/
-    data WORK.ADI_VAZCTA_2015    ;
+    data dt.ADI_VAZCTA_2015    ;
     %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
-    infile '/mnt/viya-share/myazurevol/data/keyyou/vcumassey/AreaDeprivationIndex/Datasets/VA_2015_ADI_9 Digit Zip Code_v3.1.txt' delimiter = ',' MISSOVER DSD lrecl=32767
+    infile "&folder./VCUMassey_DataAutomation/AreaDeprivationIndex/datasets//VA_2015_ADI_9 Digit Zip Code_v3.1.txt" delimiter = ',' MISSOVER DSD lrecl=32767
 firstobs=2 ;
        informat VAR1 $4. ;
        informat X best32. ;
