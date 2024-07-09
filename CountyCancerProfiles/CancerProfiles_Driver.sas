@@ -1,8 +1,5 @@
 /*  
-To do Kelsey:
 -Cancer = 400 Breast (Female in situ) does not exist in mortality data, excluded for now
--Cancer = 515, 516 ,Childhood (Ages <20 All Sites), 516,Childhood (Ages <15 All Sites) HTTP query is different and does not take AGE. 
-	Need to customize the Childhood cancer call and integrate into process.
 
 */
 
