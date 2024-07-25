@@ -3,6 +3,8 @@ libname dt "/cmw/data_automation/_data";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
+%let ExtractYear = %sysfunc(year("&sysdate"d)); 
+
 /* detect proper delim for UNIX vs. Windows */
 %let delim=%sysfunc(ifc(%eval(&sysscp. = WIN),\,/));
  /* create a name for our downloaded ZIP */
@@ -34,7 +36,7 @@ filename inzip zip "&ziploc";
 /* run; */
 
 /*https://www.fda.gov/radiation-emitting-products/mammography-information-patients/search-certified-facility  */
-  data dt.MammoScreenFacilities    ;
+  data dt.MammoScreenFacilities_&ExtractYear.    ;
           infile inzip(public.txt) delimiter = '|' MISSOVER DSD lrecl=32767 ;
           informat Facility_Name $75. ;
           informat Address1 $50. ;
@@ -67,6 +69,6 @@ filename inzip zip "&ziploc";
 		   label Facility_Name = 'Facility Name';
        run;
 proc casutil;
-droptable casdata="MammoScreenFacilities" incaslib="public" quiet;
-load data =dt.MammoScreenFacilities outcaslib = "public" casout = "MammoScreenFacilities" promote ;
+droptable casdata="MammoScreenFacilities_&ExtractYear." incaslib="public" quiet;
+load data =dt.MammoScreenFacilities_&ExtractYear. outcaslib = "public" casout = "MammoScreenFacilities_&ExtractYear." promote ;
 quit;
