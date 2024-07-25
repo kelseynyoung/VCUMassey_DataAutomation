@@ -8,14 +8,14 @@ caslib _all_ assign;
 
 %deltable (tables=dt.countyhealthranking&year. dt.countyhealthranking_trend&year.);
 
-/* !!!!!!! filename location must all be lower case !!!!!!! */
+/* !!!!!!! filename location and dataset must all be lower case !!!!!!! */
 filename CHR "&folder.countyhealthranking&year..sas7bdat";
 proc http method='GET'
 	url="https://www.countyhealthrankings.org/sites/default/files/media/document/&CHR_FileName..sas7bdat"
 	out=CHR;
 run;
 
-/* !!!!!!! filename location must all be lower case !!!!!!! */
+/* !!!!!!! filename location and dataset must all be lower case !!!!!!! */
 filename CHRT "&folder.countyhealthranking_trend&year..sas7bdat";
 proc http method='GET'
 	url="https://www.countyhealthrankings.org/sites/default/files/media/document/&CHRT_FileName..sas7bdat"
