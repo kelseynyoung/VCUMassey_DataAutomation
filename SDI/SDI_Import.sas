@@ -11,10 +11,10 @@ proc http
  out=SDI;
 run;
 
-/* proc import datafile=SDI dbms=csv out=SDI_&EY._&type. replace; */
+/* proc import datafile=SDI dbms=csv out=dt.SDI_&type._&EY. replace; */
 /* guessingrows=2000; */
 /* run; */
-data dt.SDI_&EY._&type.;
+data dt.SDI_&type._&EY.;
 
 	infile SDI delimiter=',' MISSOVER DSD firstobs=2;
 	informat &type._FIPS $32.;
@@ -76,8 +76,8 @@ run;
 
 
 proc casutil;
-droptable casdata="SDI_&EY._&type." incaslib="public" quiet;
-load data =dt.SDI_&EY._&type. outcaslib = "public" casout = "SDI_&EY._&type." promote ;
+droptable casdata="SDI_&type._&EY." incaslib="public" quiet;
+load data =dt.SDI_&type._&EY. outcaslib = "public" casout = "SDI_&type._&EY." promote ;
 quit;
 
 %mend;
