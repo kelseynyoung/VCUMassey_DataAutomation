@@ -215,28 +215,30 @@ run;
     %let _EFIERR_ = 0; /* set the ERROR detection macro variable */
     infile VAADI2 delimiter = ',' MISSOVER DSD lrecl=32767
  firstobs=2 ;
-       informat ZIP_4 $11. ;
-       informat GISJOIN $17. ;
-       informat FIPS $14. ;
-       informat TYPE $3. ;
-       informat ADI_NATRANK $3. ;
-       informat ADI_STATERANK $3. ;
-       format ZIP_4 $11. ;
-       format GISJOIN $17. ;
-       format FIPS $14. ;
-       format TYPE $3. ;
-       format ADI_NATRANK $3. ;
-       format ADI_STATERANK $3. ;
-    input
-                ZIP_4  $
-                GISJOIN  $
-                FIPS  $
-                TYPE  $
-                ADI_NATRANK  $
-                ADI_STATERANK  $
-    ;
-    if _ERROR_ then call symputx('_EFIERR_',1);  /* set ERROR detection macro variable */
-    run;
+          informat GISJOIN $17. ;
+         informat TYPE $3. ;
+         informat BENE_ZIP_CD $11. ;
+         informat ZIPID $12. ;
+         informat ADI_NATRANK $3. ;
+         informat ADI_STATERNK $3. ;
+         informat FIPS $14. ;
+         format GISJOIN $17. ;
+         format TYPE $3. ;
+         format BENE_ZIP_CD $11. ;
+         format ZIPID $12. ;
+         format ADI_NATRANK $3. ;
+         format ADI_STATERNK $3. ;
+         format FIPS $14. ;
+      	input
+                  GISJOIN  $
+                  TYPE  $
+                  BENE_ZIP_CD  $
+                  ZIPID  $
+                  ADI_NATRANK  $
+                  ADI_STATERNK  $
+                  FIPS  $
+		;
+run;
 
 
 ***************************************************************************************************;
