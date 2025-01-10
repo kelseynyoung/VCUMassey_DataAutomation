@@ -70,6 +70,7 @@ load data = dt.DP05_VACOUNTIES&year. outcaslib = "public" casout = "DP05_VACOUNT
 quit;
 
 %mend;
+%readinACS_applyVar(2023);
 %readinACS_applyVar(2022);
 %readinACS_applyVar(2021);
 %readinACS_applyVar(2020);
