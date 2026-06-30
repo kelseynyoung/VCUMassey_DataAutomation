@@ -1,11 +1,12 @@
 /*Importing 500 Cities Place - Social Determinants of Health (SDOH) Data*/
+/* For KYF - just county level */
 
 /* Data Source: https://chronicdata.cdc.gov/browse?category=500+Cities+%26+Places&sortBy=newest&utf8 */
 
 %let sdoh_yr = 2021; /*The last year of the range for the 5-year SDOH datasets. The rage for the most recent data is 2017-2021*/
 %let places_yr = 2022;  /*The year release, as specified in the Places dataset titles. The current release is 2022*/
 
-libname dt "/cmw/data_automation/_data";
+libname dt "/create-export/create/homes/Kelsey.Young@sas.com/PublicHealthData";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
@@ -45,13 +46,13 @@ quit;
 
 
 /*macro executing the steps above*/
-%SDOH_PLACES (fname = SDOHZCTA	, url=https://data.cdc.gov/api/views/bumh-rgsq/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHZCTA 		, idlength=z5.  , yr_end = &sdoh_yr.);
-%SDOH_PLACES (fname = SDOHPLCE	, url=https://data.cdc.gov/api/views/edkk-ze78/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHPlace		, idlength=z7.  , yr_end = &sdoh_yr.);
-%SDOH_PLACES (fname = SDOH_CT	, url=https://data.cdc.gov/api/views/e539-uadk/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHCTract	    , idlength=z11. , yr_end = &sdoh_yr.);
-%SDOH_PLACES (fname = SDOHCnty	, url=https://data.cdc.gov/api/views/i6u4-y3g4/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHCounty		, idlength=z5.  , yr_end = &sdoh_yr.);
-%SDOH_PLACES (fname = ZCTA	    , url=https://data.cdc.gov/api/views/gd4x-jyhw/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_ZCTA 			, idlength=z5.  , yr_end = &places_yr.);
-%SDOH_PLACES (fname = Place	    , url=https://data.cdc.gov/api/views/epbn-9bv3/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_Place			, idlength=z7.  , yr_end = &places_yr.);
-%SDOH_PLACES (fname = CT		, url=https://data.cdc.gov/api/views/nw2y-v4gm/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_CTract		    , idlength=z11. , yr_end = &places_yr.);
+/* %SDOH_PLACES (fname = SDOHZCTA	, url=https://data.cdc.gov/api/views/bumh-rgsq/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHZCTA 		, idlength=z5.  , yr_end = &sdoh_yr.); */
+/* %SDOH_PLACES (fname = SDOHPLCE	, url=https://data.cdc.gov/api/views/edkk-ze78/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHPlace		, idlength=z7.  , yr_end = &sdoh_yr.); */
+/* %SDOH_PLACES (fname = SDOH_CT	, url=https://data.cdc.gov/api/views/e539-uadk/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHCTract	    , idlength=z11. , yr_end = &sdoh_yr.); */
+/* %SDOH_PLACES (fname = SDOHCnty	, url=https://data.cdc.gov/api/views/i6u4-y3g4/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHCounty		, idlength=z5.  , yr_end = &sdoh_yr.); */
+/* %SDOH_PLACES (fname = ZCTA	    , url=https://data.cdc.gov/api/views/gd4x-jyhw/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_ZCTA 			, idlength=z5.  , yr_end = &places_yr.); */
+/* %SDOH_PLACES (fname = Place	    , url=https://data.cdc.gov/api/views/epbn-9bv3/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_Place			, idlength=z7.  , yr_end = &places_yr.); */
+/* %SDOH_PLACES (fname = CT		, url=https://data.cdc.gov/api/views/nw2y-v4gm/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_CTract		    , idlength=z11. , yr_end = &places_yr.); */
 %SDOH_PLACES (fname = County	, url=https://data.cdc.gov/api/views/duw2-7jbt/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_County			, idlength=z5.  , yr_end = &places_yr.);
 
 
