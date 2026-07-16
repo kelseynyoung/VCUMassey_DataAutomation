@@ -1,10 +1,10 @@
 /* uncomment for testing just the import */
 /* %let folder = /mnt/viya-share/myazurevol/data/keyyou/vcumassey/CountyCancerProfiles/data; */
 /* %let stateFIPS=00;  */
-/* %let areatype=state; */
-/* %let cancer=001; */
+/* %let areatype=county; */
+/* %let cancer=055; */
 /* %let race=00; */
-/* %let sex=0; */
+/* %let sex=2; */
 /* %let age=001; */
 /* %let stage=999; */
 /* %let year=0; */
@@ -34,6 +34,9 @@ run;
 proc sql noprint;
 	select year_range, year_range_end into :year_range, :year_range_end from notes;
 quit;
+/* %put year_range &year_range.; */
+/* %put year_range_end &year_range_end.; */
+
 proc datasets library=work noprint;
    delete notes;
 run;
@@ -42,7 +45,8 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	infile INCD delimiter=',' MISSOVER DSD firstobs=10;
 	informat
 	x&areatype. $100.
-	FIPS $32.
+	FIPS5 $32.
+    Rural_Urban $10.
 	XInc $32.
 	XInc_LCI $32.
 	XInc_UCI $32.
@@ -56,7 +60,8 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	XTrend_5year_UCI $32.;
 	format
 	x&areatype. $100.
-	FIPS $32.
+	FIPS5 $32.
+    Rural_Urban $10.
 	XInc $32.
 	XInc_LCI $32.
 	XInc_UCI $32.
@@ -70,7 +75,8 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	XTrend_5year_UCI $32.;
 	input
 	x&areatype. $
-	FIPS $
+	FIPS5 $
+    Rural_Urban $
 	XInc $
 	XInc_LCI $
 	XInc_UCI $
@@ -84,8 +90,8 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	XTrend_5year_UCI $;
 
 	/* delete header and footer notes */
-	if anyalpha(FIPS) > 0 then delete;
-	If FIPS = '' then delete;
+	if anyalpha(FIPS5) > 0 then delete;
+	If FIPS5 = '' then delete;
 
 	/*clean area type 	 */
 	&areatype.  = compress(X&areatype. , "1234567890())");
@@ -147,7 +153,7 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	/*apply labels for reporting  */
 	label
 
-	FIPS='FIPS'
+	FIPS5='FIPS5'
 	Inc='Incidence Rate'
 	Inc_LCI='Incidence Rate (Lower 95% Confidence Interval)'
 	Inc_UCI='Incidence Rate (Upper 95% Confidence Interval)'
@@ -163,6 +169,7 @@ data &areatype._incd_&stateFIPS._&cancer._&race._&sex._&age._&stage.;
 	Year_Range= 'Year Range'
 	Year_range_end = 'Year Range End';
 	
+    length cancer_desc $100;
 
 		if cancer = '001' then cancer_desc = 'All Cancer Sites';
 	else if cancer='001' then cancer_desc='All Cancer Sites';

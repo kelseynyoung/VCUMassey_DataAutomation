@@ -2,9 +2,9 @@
 -Cancer = 400 Breast (Female in situ) does not exist in mortality data, excluded for now
 
 */
-
-%let folder = /cmw/data_automation/VCUMassey_DataAutomation/CountyCancerProfiles;
-libname dt "/cmw/data_automation/_data";
+/* folder is for %include */
+%let folder = /create-export/create/homes/Kelsey.Young@sas.com/PublicHealthScripts/VCUMassey_DataAutomation/CountyCancerProfiles;
+libname dt "/create-export/create/homes/Kelsey.Young@sas.com/PublicHealthData/";
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
 
@@ -35,54 +35,78 @@ data dt.&final_table.; set &dsn_list.; run;
 %mend;
 /**************************************************************/
 
+
+
 /*State - permutations requested by VCU   */
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=001, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=055, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=057, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=020, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=047, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=state, cancer=066, race=00, sex=1, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=001, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=055, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=057, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=020, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=047, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
+/* %call_CancerProfiles(stateFIPS=00, areatype=state, cancer=066, race=00, sex=1, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1); */
 
-%setdatasets(STATE_INCD_00);
-%setdatasets(STATE_DEATH_00);
+/* %setdatasets(STATE_INCD_00); */
+/* %setdatasets(STATE_DEATH_00); */
 
 
 
-proc casutil;
-droptable casdata="STATE_INCD_00" incaslib="public" quiet;
-load data =dt.STATE_INCD_00 outcaslib = "public" casout = "STATE_INCD_00" promote ;
-droptable casdata="STATE_DEATH_00" incaslib="public" quiet;
-load data =dt.STATE_DEATH_00 outcaslib = "public" casout = "STATE_DEATH_00" promote ;
-quit;
+/* proc casutil; */
+/* droptable casdata="STATE_INCD_00" incaslib="public" quiet; */
+/* load data =dt.STATE_INCD_00 outcaslib = "public" casout = "STATE_INCD_00" promote ; */
+/* droptable casdata="STATE_DEATH_00" incaslib="public" quiet; */
+/* load data =dt.STATE_DEATH_00 outcaslib = "public" casout = "STATE_DEATH_00" promote ; */
+/* quit; */
 
-/*County - permutations requested by VCU    */
+
+
+/*County - level for all female cancers     */
 %call_CancerProfiles(stateFIPS=00, areatype=county, cancer=001, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=001, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
 %call_CancerProfiles(stateFIPS=00, areatype=county, cancer=055, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
 %call_CancerProfiles(stateFIPS=00, areatype=county, cancer=057, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=020, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=047, race=00, sex=0, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
-%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=066, race=00, sex=1, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=058, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=061, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=003, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=017, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=018, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=020, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=035, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=040, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=047, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=053, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=071, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=072, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=076, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=080, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=086, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
+%call_CancerProfiles(stateFIPS=00, areatype=county, cancer=090, race=00, sex=2, age=001, stage=999, year=0,  sortVariableName=rate, sortOrder=desc, output=1);
 
 %setdatasets(COUNTY_INCD_00);
 %setdatasets(COUNTY_DEATH_00);
 
-proc casutil;
-droptable casdata="COUNTY_INCD_00" incaslib="public" quiet;
-load data =dt.COUNTY_INCD_00 outcaslib = "public" casout = "COUNTY_INCD_00" promote ;
-droptable casdata="COUNTY_DEATH_00" incaslib="public" quiet;
-load data =dt.COUNTY_DEATH_00 outcaslib = "public" casout = "COUNTY_DEATH_00" promote ;
+proc casutil incaslib="KAY_YOW" outcaslib="KAY_YOW";
+droptable casdata="COUNTY_INCD_00"  quiet;
+load data =dt.COUNTY_INCD_00  casout = "COUNTY_INCD_00" promote ;
+save casdata="COUNTY_INCD_00" replace;
+droptable casdata="COUNTY_DEATH_00"  quiet;
+load data =dt.COUNTY_DEATH_00 casout = "COUNTY_DEATH_00" promote ;
+save casdata="COUNTY_DEATH_00" replace;
 quit;
 
-/*Virginia County Level */
-/* Create Master Dataset of all Combinations (minus non existing ex: prostate & female)  */
-%include "&folder./Create Query Lookup Tables.sas";
+
+
+
+/*all County Level */
+/* Create Master Dataset of all Combinations for Female cancers (minus non existing ex: prostate & female)  */
+/* %include "&folder./Create Query Lookup Tables.sas"; */
 /*Open the Program and Run piece meal  */
-%include "&folder./Execute for VA County.sas";
+/* %include "&folder./Execute for VA County.sas"; */
 
-proc casutil;
-droptable casdata="COUNTY_INCD_51" incaslib="public" quiet;
-load data =dt.COUNTY_INCD_51 outcaslib = "public" casout = "COUNTY_INCD_51" promote ;
-droptable casdata="COUNTY_DEATH_51" incaslib="public" quiet;
-load data =dt.COUNTY_DEATH_51 outcaslib = "public" casout = "COUNTY_DEATH_51" promote ;
-quit;
+/* proc casutil; */
+/* droptable casdata="COUNTY_INCD_51" incaslib="public" quiet; */
+/* load data =dt.COUNTY_INCD_51 outcaslib = "public" casout = "COUNTY_INCD_51" promote ; */
+/* droptable casdata="COUNTY_DEATH_51" incaslib="public" quiet; */
+/* load data =dt.COUNTY_DEATH_51 outcaslib = "public" casout = "COUNTY_DEATH_51" promote ; */
+/* quit; */
 

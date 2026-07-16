@@ -1,4 +1,4 @@
-libname dt "/cmw/data_automation/_data";
+libname dt "/create-export/create/homes/Kelsey.Young@sas.com/PublicHealthData";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
@@ -69,6 +69,6 @@ filename inzip zip "&ziploc";
 		   label Facility_Name = 'Facility Name';
        run;
 proc casutil;
-droptable casdata="MammoScreenFacilities_&ExtractYear." incaslib="public" quiet;
-load data =dt.MammoScreenFacilities_&ExtractYear. outcaslib = "public" casout = "MammoScreenFacilities_&ExtractYear." promote ;
+droptable casdata="MammoScreenFacilities_&ExtractYear." incaslib="KAY_YOW" quiet;
+load data =dt.MammoScreenFacilities_&ExtractYear. outcaslib = "KAY_YOW" casout = "MammoScreenFacilities_&ExtractYear." promote ;
 quit;

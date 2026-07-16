@@ -6,28 +6,30 @@ input cancer $ cancer_desc $;
 
 datalines;
 001,All Cancer Sites
-003,Oral Cavity & Pharynx
-017,Esophagus
-018,Stomach
-020,Colon & Rectum
-035,Liver & Bile Duct
-040,Pancreas
-047,Lung & Bronchus
-053,Melanoma of the Skin
+
 055,Breast (Female)
 057,Cervix
 058,Uterus (Corpus & Uterus NOS)
 061,Ovary
-066,Prostate
-071,Bladder
-072,Kidney & Renal Pelvis
-076,Brain & ONS
-080,Thyroid
-086,Non-Hodgkin Lymphoma
-090,Leukemia
-515,Childhood (Ages <20 All Sites)
-516,Childhood (Ages <15 All Sites)
+
 ;
+/* 003,Oral Cavity & Pharynx */
+/* 017,Esophagus */
+/* 018,Stomach */
+/* 020,Colon & Rectum */
+/* 035,Liver & Bile Duct */
+/* 040,Pancreas */
+/* 047,Lung & Bronchus */
+/* 053,Melanoma of the Skin */
+/* 066,Prostate */
+/* 071,Bladder */
+/* 072,Kidney & Renal Pelvis */
+/* 076,Brain & ONS */
+/* 080,Thyroid */
+/* 086,Non-Hodgkin Lymphoma */
+/* 090,Leukemia */
+/* 515,Childhood (Ages <20 All Sites) */
+/* 516,Childhood (Ages <15 All Sites) */
 /* 400,Breast (Female in situ) */
 run;
 
@@ -55,10 +57,11 @@ length sex_desc $50;
 input sex $ sex_desc $;
 
 datalines;
-0,Both Sexes
-1,Male
+
 2,Female
 ;
+/* 0,Both Sexes */
+/* 1,Male */
 run;
 
 
@@ -70,11 +73,12 @@ input age $ age_desc $;
 
 datalines;
 001,All Ages
-006,<65
-009,<50
-136,50+
-157,65+
+
 ;
+/* 006,<65 */
+/* 009,<50 */
+/* 136,50+ */
+/* 157,65+ */
 run;
 
 
@@ -109,7 +113,7 @@ quit;
 
 data Param_combosMACRO ;
 set Param_combos;
-MACRO = '%call_CancerProfiles(stateFIPS=51, areatype=county, cancer='||cancer||', race='||race||', sex='||sex||', age='||age||', stage='||stage||', year=0,  sortVariableName=rate, sortOrder=desc, output=1);'; 
+MACRO = '%call_CancerProfiles(stateFIPS=00, areatype=county, cancer='||cancer||', race='||race||', sex='||sex||', age='||age||', stage='||stage||', year=0,  sortVariableName=rate, sortOrder=desc, output=1);'; 
 obsno=_n_;
 /*When cancer = all or leukemia, stage can only be All stages  */
 if cancer in('001', '090') and stage = '211' then delete;

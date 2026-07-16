@@ -1,4 +1,4 @@
-libname dt "/cmw/data_automation/_data";
+libname dt "/create-export/create/homes/Kelsey.Young@sas.com/PublicHealthData/";
 
 cas mySession sessopts=(caslib=casuser timeout=1800 locale="en_US");
 caslib _all_ assign;
@@ -30,7 +30,8 @@ run;
 
 filename DP temp;
 
-proc http url="https://api.census.gov/data/&year./acs/acs5/profile?get=group(DP05)%nrstr(&)for=county:*%nrstr(&)in=state:51%nrstr(&)key=f79eb0c516892290805ff7bc52a9eaff13bf676f"
+
+proc http url="https://api.census.gov/data/&year./acs/acs5/profile?get=group(DP05)%nrstr(&)for=county:*%nrstr(&)key=f79eb0c516892290805ff7bc52a9eaff13bf676f"
 out=DP;
 run;
 libname ACS JSON fileref=DP;
@@ -65,11 +66,12 @@ run;
 %deltable (tables=work.var_desc&year. work.var_desc&year.T work.var_element&year. );
 
 proc casutil;
-droptable casdata="DP05_VACOUNTIES&year." incaslib="public" quiet;
-load data = dt.DP05_VACOUNTIES&year. outcaslib = "public" casout = "DP05_VACOUNTIES&year." promote ;
+droptable casdata="DP05_VACOUNTIES&year." incaslib="KAY_YOW" quiet;
+load data = dt.DP05_VACOUNTIES&year. outcaslib = "KAY_YOW" casout = "DP05_VACOUNTIES&year." promote ;
 quit;
 
 %mend;
+%readinACS_applyVar(2024);
 %readinACS_applyVar(2023);
 %readinACS_applyVar(2022);
 %readinACS_applyVar(2021);

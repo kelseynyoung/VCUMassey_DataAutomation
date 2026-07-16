@@ -42,7 +42,8 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	infile death delimiter=',' MISSOVER DSD firstobs=10;
 	informat
 	x&areatype. $100.
-	FIPS $32.
+	FIPS5 $32.
+    Rural_Urban $10.
 	Object_met $32.
 	XMort $32.
 	XMort_LCI $32.
@@ -57,7 +58,8 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	XTrend_5year_UCI $32.;
 	format
 	x&areatype. $100.
-	FIPS $32.
+	FIPS5 $32.
+    Rural_Urban $10.
 	Object_met $32.
 	XMort $32.
 	XMort_LCI $32.
@@ -72,7 +74,8 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	XTrend_5year_UCI $32.;
 	input
 	x&areatype. $
-	FIPS $
+	FIPS5 $
+    Rural_Urban $
 	Object_met $
 	XMort $
 	XMort_LCI $
@@ -87,8 +90,8 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	XTrend_5year_UCI $;
 
 	/* delete header and footer  */
-	if anyalpha(FIPS) > 0 then delete;
-	If FIPS='' then delete;
+	if anyalpha(FIPS5) > 0 then delete;
+	If FIPS5='' then delete;
 
 	/*clean area type 	 */
 	&areatype.  = compress(X&areatype. , "1234567890())");
@@ -148,7 +151,7 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	/*apply labels for reporting  */
 	label
 
-	FIPS='FIPS'
+	FIPS5='FIPS5'
 	Object_met='Met Healthy People Objective of 16.9?'
 	Mort='Mortality Rate'
 	Mort_LCI='Mortality Rate (Lower 95% Confidence Interval)'
@@ -165,6 +168,7 @@ data &areatype._death_&stateFIPS._&cancer._&race._&sex._&age.;
 	Year_Range= 'Year Range'
 	Year_range_end = 'Year Range End';
 
+    length cancer_desc $100;
 			if cancer = '001' then cancer_desc = 'All Cancer Sites';
 	else if cancer='001' then cancer_desc='All Cancer Sites';
 	else if cancer='003' then cancer_desc='Oral Cavity & Pharynx';
