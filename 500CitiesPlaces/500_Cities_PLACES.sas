@@ -33,7 +33,7 @@ data dt.&dsn._&yr_end.;
 set &dsn._&yr_end (rename=(locationID=location_num));
 FIPS5=put(location_num,&idlength.); 
 data_range_end_year = &yr_end.;
-drop location_num;
+/* drop location_num; */
 run;
 
 
@@ -50,12 +50,12 @@ quit;
 /*macro executing the steps above*/
 
 %SDOH_PLACES (fname = SDOHCnty	, url=https://data.cdc.gov/api/views/i6u4-y3g4/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_SDOHCounty		, idlength=z5.  , yr_end = &sdoh_yr.);
-%SDOH_PLACES (fname = County	, url=https://data.cdc.gov/api/views/duw2-7jbt/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_County			, idlength=z5.  , yr_end = &places_yr.);
+%SDOH_PLACES (fname = County	, url=https://data.cdc.gov/api/views/swc5-untb/rows.csv?accessType=DOWNLOAD	, dsn=_500CitiesPlaces_County			, idlength=z5.  , yr_end = &places_yr.);
 
 
 
 
-/* old Places */
+/* old Places County PLACES: Local Data for Better Health, County Data */
 /* https://data.cdc.gov/api/views/duw2-7jbt/rows.csv?accessType=DOWNLOAD */
 
 

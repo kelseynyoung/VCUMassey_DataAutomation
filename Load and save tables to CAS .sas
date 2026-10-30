@@ -34,3 +34,6 @@ quit;
 %load(MAMMOSCREENFACILITIES_2026,           MAMMOSCREENFACILITIES_2026);
 %load(SVI_CENSUSTRACTS_2022,                SVI_CENSUSTRACTS_2022);
 %load(SVI_COUNTIES_2022,                    SVI_COUNTIES_2022);
+%load(MAMMO_GEO,                            MAMMO_GEO);
+%load(GRANTS_GEO,                           GRANTS_GEO);
+
